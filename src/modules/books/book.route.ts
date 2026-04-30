@@ -1,12 +1,10 @@
-import express from 'express';
-import { createBook } from './book.controller.js';
+    import express from 'express';
+    import { createBook } from './book.controller.js';
+    import { validateRequest } from '../../middlewares/validateRequest.js';
+    import { createBookSchema } from './book.validation.js';
 
-const router = express.Router();
+    const router = express.Router();
 
-router.post('/', createBook);
-// router.get('/', getAllBooksController);
-// router.get('/:id', getBookById);
-// router.put('/:id', updateBook);
-// router.delete('/:id', deleteBook);
+    router.post('/',validateRequest(createBookSchema) , createBook);
 
-export default router;
+    export default router;

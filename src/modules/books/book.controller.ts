@@ -1,16 +1,10 @@
 /* eslint-disable no-console */
 import * as bookService from './book.service.js';
 import { Request, Response } from 'express';
-import { createBookSchema } from './book.validation.js';
 
 export const createBook = async (req: Request, res: Response): Promise<void> => {
   try {
-    const parsed = createBookSchema.safeParse(req.body);
-    if (!parsed.success) {
-      res.status(400).json({ success: false, error: parsed.error });
-      return;
-    }
-    const result = await bookService.createBook(parsed.data);
+    const result = await bookService.createBook(req.body);
     res.status(201).json({
       success: true,
       message: 'Book created successfully',
