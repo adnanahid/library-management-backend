@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as bookService from './book.service.js';
 import { NextFunction, Request, Response } from 'express';
 
