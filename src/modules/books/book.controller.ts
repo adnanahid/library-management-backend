@@ -57,7 +57,6 @@ export const getBookById = async (
   }
 };
 
-
 export const deleteBookById = async (
   req: Request,
   res: Response,
@@ -72,7 +71,7 @@ export const deleteBookById = async (
     res.status(200).json({
       success: true,
       message: 'Book deleted successfully',
-      data: result,
+      data: null,
     });
   } catch (error) {
     next(error);
