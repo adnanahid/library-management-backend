@@ -10,6 +10,13 @@ export interface IBook {
   available: boolean;
 }
 
+export interface IQuery {
+  filter?: string;
+  sortBy?: string;
+  sort?: string;
+  limit?: string;
+}
+
 export const bookSchema = new Schema(
   {
     title: { type: String, required: true },
