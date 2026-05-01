@@ -26,6 +26,7 @@ export const bookSchema = new Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 const BookModel = mongoose.model<IBook>('Book', bookSchema);
