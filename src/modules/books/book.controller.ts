@@ -35,3 +35,24 @@ export const getAllBooks = async (
     next(error);
   }
 };
+
+export const getBookById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const result = await bookService.getBookById(req.params.id as string);
+    if (!result) {
+      res.status(404).json({ success: false, message: 'Book not found' });
+      return;
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Book retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
