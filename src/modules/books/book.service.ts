@@ -21,6 +21,14 @@ export const getBookById = async (bookId: string): Promise<HydratedDocument<IBoo
   return result;
 };
 
+export const updateBookById = async (
+  bookId: string,
+  payload: Partial<TCreateBook>,
+): Promise<HydratedDocument<IBook> | null> => {
+  const result = await BookModel.findByIdAndUpdate(bookId, payload, { returnDocument: 'after' });
+  return result;
+};
+
 export const deleteBookById = async (bookId: string): Promise<HydratedDocument<IBook> | null> => {
   const result = await BookModel.findByIdAndDelete(bookId);
   return result;

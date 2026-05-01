@@ -57,6 +57,27 @@ export const getBookById = async (
   }
 };
 
+export const updateBookById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const result = await bookService.updateBookById(req.params.bookId as string, req.body);
+    if (!result) {
+      res.status(404).json({ success: false, message: 'Book not found' });
+      return;
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Book updated successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteBookById = async (
   req: Request,
   res: Response,
