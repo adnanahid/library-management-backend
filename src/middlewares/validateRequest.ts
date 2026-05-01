@@ -3,7 +3,7 @@ import { ZodType } from 'zod';
 
 export const validateRequest =
   <T>(schema: ZodType<T>) =>
-  (req: Request, res: Response, next: NextFunction): void => {
+  (req: Request, _res: Response, next: NextFunction): void => {
     const result = schema.safeParse({
       body: req.body,
       query: req.query,
@@ -14,13 +14,6 @@ export const validateRequest =
       req.body = (result.data as { body: unknown }).body;
       next();
     } else {
-      res.status(400).json({
-        success: false,
-        message: 'Validation Error',
-        errorSources: result.error.issues.map((issue) => ({
-          path: issue.path.join('.'),
-          message: issue.message,
-        })),
-      });
+      next(result.error);
     }
   };

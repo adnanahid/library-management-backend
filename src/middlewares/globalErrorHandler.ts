@@ -10,6 +10,7 @@ interface AppError {
   stack?: string;
   path?: string;
   value?: unknown;
+  issues?: unknown[];
 }
 
 export const globalErrorHandler = (
@@ -42,6 +43,9 @@ export const globalErrorHandler = (
   res.status(statusCode).json({
     success: false,
     message,
-    error: err,
+    error: {
+      name: error.name,
+      errors: error.name === 'ZodError' ? error.issues : err,
+    },
   });
 };
