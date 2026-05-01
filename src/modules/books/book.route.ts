@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post('/', validateRequest(createBookSchema), createBook);
 router.get('/', getAllBooks);
-router.get('/:id', getBookById);
+router.get('/:bookId', getBookById);
 
 export default router;

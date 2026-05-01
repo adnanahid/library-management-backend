@@ -16,7 +16,7 @@ export const getAllBooks = async (query: IQuery): Promise<HydratedDocument<IBook
   return books;
 };
 
-export const getBookById = async (id: string): Promise<HydratedDocument<IBook> | null> => {
-  const result = await BookModel.findById(id);
+export const getBookById = async (bookId: string): Promise<HydratedDocument<IBook> | null> => {
+  const result = await BookModel.findById(bookId);
   return result;
 };

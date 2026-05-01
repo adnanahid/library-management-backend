@@ -42,7 +42,7 @@ export const getBookById = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const result = await bookService.getBookById(req.params.id as string);
+    const result = await bookService.getBookById(req.params.bookId as string);
     if (!result) {
       res.status(404).json({ success: false, message: 'Book not found' });
       return;
