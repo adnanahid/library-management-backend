@@ -20,3 +20,8 @@ export const getBookById = async (bookId: string): Promise<HydratedDocument<IBoo
   const result = await BookModel.findById(bookId);
   return result;
 };
+
+export const deleteBookById = async (bookId: string): Promise<HydratedDocument<IBook> | null> => {
+  const result = await BookModel.findByIdAndDelete(bookId);
+  return result;
+};

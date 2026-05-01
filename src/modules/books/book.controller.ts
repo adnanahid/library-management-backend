@@ -56,3 +56,25 @@ export const getBookById = async (
     next(error);
   }
 };
+
+
+export const deleteBookById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const result = await bookService.deleteBookById(req.params.bookId as string);
+    if (!result) {
+      res.status(404).json({ success: false, message: 'Book not found' });
+      return;
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Book deleted successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
