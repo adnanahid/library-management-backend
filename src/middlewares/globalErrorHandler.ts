@@ -8,8 +8,8 @@ interface AppError {
   code?: number;
   keyValue?: Record<string, unknown>;
   stack?: string;
-  path?: string; // ← add this for CastError
-  value?: unknown; // ← add this for CastError value
+  path?: string;
+  value?: unknown;
 }
 
 export const globalErrorHandler = (
