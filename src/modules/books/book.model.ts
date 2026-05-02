@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
 export interface IBook {
   title: string;
@@ -8,6 +8,10 @@ export interface IBook {
   description?: string;
   copies: number;
   available: boolean;
+}
+
+interface IBookModel extends Model<IBook> {
+  borrowBook(bookId: string, quantity: number): Promise<void>;
 }
 
 export interface IQuery {
@@ -36,6 +40,16 @@ export const bookSchema = new Schema(
     versionKey: false,
   },
 );
-const BookModel = mongoose.model<IBook>('Book', bookSchema);
 
-export default BookModel;
+bookSchema.statics.borrowBook = async function (bookId, quantity): Promise<void> {
+  const book = await this.findById(bookId);
+  if (!book) throw new Error('Book not found');
+  if (book.copies < quantity) throw new Error('Not enough copies available');
+  book.copies -= quantity;
+  if (book.copies === 0) book.available = false;
+  await book.save();
+};
+
+const Book = mongoose.model<IBook, IBookModel>('Book', bookSchema);
+
+export default Book;
