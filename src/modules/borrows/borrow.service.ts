@@ -26,11 +26,11 @@ export const getAllBorrows = async (): Promise<HydratedDocument<IBorrow>[]> => {
     {
       $project: {
         _id: 0,
-        totalQuantity: 1,
         book: {
           title: 1,
           isbn: 1,
         },
+        totalQuantity: 1,
       },
     },
   ]);
