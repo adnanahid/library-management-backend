@@ -41,12 +41,39 @@ export const bookSchema = new Schema(
   },
 );
 
-bookSchema.statics.borrowBook = async function (bookId, quantity): Promise<void> {
+bookSchema.pre('save', function () {
+  this.available = this.copies > 0;
+});
+
+// bookSchema.statics.borrowBook = async function (bookId, quantity): Promise<void> {
+//   const updatedBook = await this.findOneAndUpdate(
+//     { _id: bookId, copies: { $gte: quantity } },
+//     [
+//       {
+//         $set: {
+//           copies: { $subtract: ['$copies', quantity] },
+//           available: {
+//             $cond: {
+//               if: { $eq: [{ $subtract: ['$copies', quantity] }, 0] },
+//               then: false,
+//               else: true,
+//             },
+//           },
+//         },
+//       },
+//     ],
+//     { new: true },
+//   );
+//   if (!updatedBook) {
+//     throw new Error('Book not found or insufficient copies');
+//   }
+// };
+
+bookSchema.statics.borrowBook = async function (bookId: string, quantity: number): Promise<void> {
   const book = await this.findById(bookId);
   if (!book) throw new Error('Book not found');
   if (book.copies < quantity) throw new Error('Not enough copies available');
   book.copies -= quantity;
-  if (book.copies === 0) book.available = false;
   await book.save();
 };
 
