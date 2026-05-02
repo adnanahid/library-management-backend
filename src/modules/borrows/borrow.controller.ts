@@ -17,3 +17,20 @@ export const createBorrow = async (
     next(error);
   }
 };
+
+export const getAllBorrows = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const result = await borrowService.getAllBorrows();
+    res.status(200).json({
+      success: true,
+      message: 'Borrowed books summary retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
