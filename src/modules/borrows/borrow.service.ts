@@ -9,7 +9,7 @@ export const createBorrow = async (payload: TcreateBorrow): Promise<HydratedDocu
   return result;
 };
 
-export const getAllBorrows = async () => {
+export const getAllBorrows = async (): Promise<HydratedDocument<IBorrow>[]> => {
   const result = await Borrow.aggregate([
     {
       $group: { _id: '$book', totalQuantity: { $sum: '$quantity' } },
